@@ -83,26 +83,5 @@ def duplicate_nationalcode(code : int , db: Session):
     
 
 
-#creat new admin
-def create_admin(request: StudentBase, db: Session):
 
-    admin = Admin(
-        username=request.username,
-        password=Hash.bcrypt(request.password),
-        email=request.email
-    )
-    db.add(admin)
-    db.commit()
-    db.refresh(admin)
-    return admin
-
-
-#get student by admin
-def get_admin_by_username(username: str, db: Session):
-    admin = db.query(Admin).filter(Admin.username == username).first()
-    if not admin:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail='admin not found !')
-
-    return admin
 

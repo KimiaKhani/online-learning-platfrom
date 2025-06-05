@@ -4,6 +4,11 @@ from typing import ClassVar
 from datetime import datetime, date
 from typing import List
 from typing import Optional
+from enum import Enum
+from enum import Enum as PyEnum
+from sqlalchemy import Enum as SQLEnum
+
+
 
 
 class StudentBase(BaseModel):
@@ -105,3 +110,41 @@ class LanguageUpdateBase(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+
+class LevelEnum(PyEnum):
+    A1 = "A1"
+    A2 = "A2"
+    B1 = "B1"
+    B2 = "B2"
+    C1 = "C1"
+    C2 = "C2"
+
+
+class CourseBase(BaseModel):
+    language_title: str
+    teacher_name: str
+    is_online: bool
+    level: LevelEnum  
+    start_time : datetime
+    end_time : datetime
+    is_completed : bool
+
+    class Config:
+        use_enum_values = True 
+        from_attributes = True
+
+class CourseDisplay(BaseModel):
+    id: int
+    language_title: str
+    teacher_name: str
+    is_online: bool
+    level: str
+    start_time: datetime
+    end_time: datetime
+    is_completed: bool
+
+    class Config:
+        from_attributes = True
+        use_enum_values = True
